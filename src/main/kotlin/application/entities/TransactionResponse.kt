@@ -9,4 +9,6 @@ data class TransactionResponse(
     val targetValue: Float,
     val rateConversion: Float,
     val dateTime: String,
-)
+    ) {
+    // TODO: implement the toResponse from a domain/Transaction to a application/TransactionResponse
+}
