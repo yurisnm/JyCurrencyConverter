@@ -6,4 +6,6 @@ data class TransactionRequest(
     val sourceCurrency: String,
     val sourceValue: Float,
     val targetCurrency: String
-    )
+    ){
+    // TODO: implement the toModel  (domain/Transaction)
+}
