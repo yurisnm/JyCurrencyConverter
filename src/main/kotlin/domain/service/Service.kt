@@ -1,5 +1,7 @@
 package domain.service
 
 interface Service<T> {
-    //TODO: Almost the same as the repo (compatible)
+    fun save(entity: T): T
+    fun findAll(): List<T>
+    fun findAllByUserId(userId: String): List<T>
 }
