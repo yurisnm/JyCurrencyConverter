@@ -1,4 +1,4 @@
-package application.errors
+package application.api.errors
 
 data class HttpError(
     val type: String,
