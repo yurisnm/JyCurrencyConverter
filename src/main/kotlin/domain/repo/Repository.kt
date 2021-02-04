@@ -1,5 +1,7 @@
 package domain.repo
 
 interface Repository<T>{
-    //TODO: All methods needed for the basic repository.
+    fun save(entity : T): T
+    fun findAll(): List<T>
+    fun findAllByUserId(userId: String): List<T>
 }
