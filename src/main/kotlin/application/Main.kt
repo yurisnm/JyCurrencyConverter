@@ -1,10 +1,22 @@
 package application
 
+import application.api.Init
+import application.api.config.modulesAll
 import io.javalin.Javalin
+import org.koin.core.context.startKoin
 
-fun main(args: Array<String>) {
-    // TODO: A Koin component will be needed for a better App start
-    // TODO: It's necessary a low level api for data-base connection to handle query and responses.
-    val app = Javalin.create().start(7000)
-    app.get("/") { ctx -> ctx.result("Hello World") }
+object Main{
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+        startApplication()
+    }
+
+    fun startApplication(): Javalin{
+        startKoin {
+            modules(modulesAll)
+        }
+
+        return Init.start()
+    }
 }

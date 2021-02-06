@@ -1,4 +1,4 @@
-package application.exceptions
+package application.api.exceptions
 
 class InvalidTransaction (
     val type: String,
