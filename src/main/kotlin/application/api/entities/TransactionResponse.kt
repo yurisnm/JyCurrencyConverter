@@ -1,7 +1,6 @@
 package application.api.entities
 
 import domain.entities.Transaction
-import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
 class TransactionResponse(

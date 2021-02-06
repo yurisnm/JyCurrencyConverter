@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.jvm' version '1.4.21'
+    id 'idea'
 }
 
 apply plugin: 'application'
@@ -8,24 +9,85 @@ mainClassName = 'application.Main'
 group 'org.example'
 version '1.0-SNAPSHOT'
 
+sourceSets {
+    testIntegration {
+        java.srcDir 'src/testIntegration/java'
+        kotlin.srcDir 'src/testIntegration/kotlin'
+        resources.srcDir 'src/testIntegration/resources'
+        compileClasspath += main.output
+        runtimeClasspath += main.output
+    }
+}
+
+configurations {
+    testIntegrationImplementation.extendsFrom testImplementation
+    testIntegrationRuntime.extendsFrom testRuntime
+}
+
+task testIntegration(type: Test) {
+    description = 'Running Integration Tests.'
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.testIntegration.output.classesDirs
+    classpath = sourceSets.testIntegration.runtimeClasspath
+    testLogging.showStandardStreams = true
+    outputs.upToDateWhen {false}
+}
+
+test {
+    useJUnitPlatform()
+    testLogging.showStandardStreams = true
+}
+
+idea {
+    module {
+        testSourceDirs += project.sourceSets.testIntegration.java.srcDirs
+        testSourceDirs += project.sourceSets.testIntegration.kotlin.srcDirs
+        testSourceDirs += project.sourceSets.testIntegration.resources.srcDirs
+    }
+}
+
+check.dependsOn testIntegration
+testIntegration.mustRunAfter test
+
 repositories {
     mavenCentral()
     jcenter()
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.3.31'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    implementation 'io.javalin:javalin:3.13.0'
-    implementation 'org.slf4j:slf4j-simple:1.7.26'
-    implementation 'org.koin:koin-core:2.0.0-GA4'
-    implementation 'org.jetbrains.exposed:exposed:0.17.8'
-    implementation 'org.jetbrains.exposed:exposed-jodatime:0.29.1'
-    implementation 'org.jetbrains.exposed:exposed-jdbc:0.29.1'
-    implementation 'com.h2database:h2:1.4.197'
-    implementation 'com.zaxxer:HikariCP:3.4.5'
-    implementation 'khttp:khttp:1.0.0'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8'
+    implementation(
+    'org.jetbrains.kotlin:kotlin-stdlib:1.3.31',
+    'org.jetbrains.kotlin:kotlin-stdlib-jdk8',
+    'io.javalin:javalin:3.13.0',
+    'org.slf4j:slf4j-simple:1.7.26',
+    'org.koin:koin-core:2.0.0-GA4',
+    'org.jetbrains.exposed:exposed:0.17.8',
+    'org.jetbrains.exposed:exposed-jodatime:0.29.1',
+    'org.jetbrains.exposed:exposed-jdbc:0.29.1',
+    'com.h2database:h2:1.4.197',
+    'com.zaxxer:HikariCP:3.4.5',
+    'khttp:khttp:1.0.0',
+    'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8',
+    'org.jetbrains.kotlin:kotlin-reflect:1.3.40',
+    )
+
+    testImplementation (
+            'org.junit.jupiter:junit-jupiter:5.4.2',
+            'org.assertj:assertj-core:3.11.1',
+            'io.mockk:mockk:1.9.3'
+    )
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+compileTestIntegrationKotlin {
+    kotlinOptions.jvmTarget = "1.8"
 }
 
 jar {
@@ -35,3 +97,6 @@ jar {
 
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
+
+task stage(dependsOn: ['build', 'clean', 'jar'])
+build.mustRunAfter clean
