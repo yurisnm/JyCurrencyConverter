@@ -15,7 +15,7 @@ object HandlerError {
             }
 
             else -> {
-                HttpError("Unknown error", "error not indentified") to HttpStatus.INTERNAL_SERVER_ERROR_500
+                HttpError("Unknown error", "error not identified") to HttpStatus.INTERNAL_SERVER_ERROR_500
             }
 
         }

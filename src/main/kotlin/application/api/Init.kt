@@ -2,7 +2,6 @@ package application.api
 
 import application.api.controllers.TransactionController
 import application.api.errors.HandlerError
-import application.api.errors.HandlerError.handlerErrorException
 import io.javalin.Javalin
 import org.jetbrains.exposed.sql.Database
 import org.koin.core.KoinComponent
