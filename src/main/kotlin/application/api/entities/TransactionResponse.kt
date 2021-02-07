@@ -24,7 +24,7 @@ class TransactionResponse(
     val targetValue: Float,
     val conversionRate: Float,
     val dateTime: String,
-    ) {
+) {
     companion object {
         private val formatter = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss")
 
@@ -34,7 +34,7 @@ class TransactionResponse(
             sourceCurrency = transaction.sourceCurrency,
             sourceValue = transaction.sourceValue,
             targetCurrency = transaction.targetCurrency,
-            targetValue = transaction.sourceValue*transaction.conversionRate,
+            targetValue = transaction.sourceValue * transaction.conversionRate,
             conversionRate = transaction.conversionRate,
             dateTime = transaction.dateTime.toString(formatter),
         )

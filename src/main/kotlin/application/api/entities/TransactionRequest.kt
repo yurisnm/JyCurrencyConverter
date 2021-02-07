@@ -18,7 +18,7 @@ class TransactionRequest(
     private val sourceCurrency: String,
     private val sourceValue: Float,
     private val targetCurrency: String
-    ){
+) {
 
     private val converter = TransactionRateConverter()
 

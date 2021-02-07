@@ -23,7 +23,7 @@ class ApplicationTest {
     private val url = "http://localhost:7000/"
 
     @BeforeEach
-    fun setUp(){
+    fun setUp() {
         /**
          * Raise the JyCurrencyConverter application.
          */
@@ -31,7 +31,7 @@ class ApplicationTest {
     }
 
     @AfterEach
-    fun tearDown(){
+    fun tearDown() {
         /**
          * Stops the JyCurrencyConverter application.
          */
@@ -40,7 +40,7 @@ class ApplicationTest {
     }
 
     @Test
-    fun testPOSTTransaction(){
+    fun testPOSTTransaction() {
         /**
          * The application must be able to save a new transaction passing an expected body.
          */
@@ -52,7 +52,7 @@ class ApplicationTest {
     }
 
     @Test
-    fun testGETAllTransactions(){
+    fun testGETAllTransactions() {
         /**
          * The application must be able to list all saved transactions.
          */
@@ -60,11 +60,11 @@ class ApplicationTest {
         val response = khttp.get(url = url + "transaction")
         val transactions = response.text.deserialize<List<TransactionResponse>>()
         assertTrue(transactions.isNotEmpty())
-        assertEquals(200,response.statusCode)
+        assertEquals(200, response.statusCode)
     }
 
     @Test
-    fun testGETAllTransactionsByUserId(){
+    fun testGETAllTransactionsByUserId() {
         /**
          * The application must be able to list all saved transactions by userId.
          */
@@ -72,13 +72,12 @@ class ApplicationTest {
         val response = khttp.get(url = url + "transaction/user0001")
         val transactions = response.text.deserialize<List<TransactionResponse>>()
         assertTrue(transactions.isNotEmpty())
-        assertEquals(200,response.statusCode)
+        assertEquals(200, response.statusCode)
 
         val response2 = khttp.get(url = url + "transaction/user0002")
         val transactions2 = response2.text.deserialize<List<TransactionResponse>>()
         assertTrue(transactions2.isEmpty())
-        assertEquals(200,response2.statusCode)
-
+        assertEquals(200, response2.statusCode)
     }
 
     private fun createTransaction(json_file_name: String): Response {
@@ -87,7 +86,7 @@ class ApplicationTest {
          * @param json_file_name [String] The name of the file that will have its content used as body for posting a transaction.
          * @return [Response] The response returned by the khttp post.
          */
-        val resr = javaClass.getResource("/${json_file_name}.json").readText()
+        val resr = javaClass.getResource("/$json_file_name.json").readText()
         return khttp.post(
             url = url + "transaction",
             data = resr

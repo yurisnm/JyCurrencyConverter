@@ -13,8 +13,7 @@ class TransactionRequestBuilder {
     private val sourceValue: Float = 1.00F
     private val targetCurrency: String = "BRL"
 
-
-    companion object{
+    companion object {
         fun build(transaction: TransactionRequestBuilder = TransactionRequestBuilder()): TransactionRequest =
             TransactionRequest(
                 id = transaction.id,

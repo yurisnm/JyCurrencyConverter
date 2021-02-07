@@ -11,9 +11,9 @@ class TransactionRateConverter {
      * @property targetCurrency[String] The currency that the value will be converted.
      * @return [Float] A rate value to be used for currency conversion.
      */
-    fun getConversionRate(sourceCurrency: String, targetCurrency: String): Float{
+    fun getConversionRate(sourceCurrency: String, targetCurrency: String): Float {
         val baseUrl = "https://api.exchangeratesapi.io/latest?base="
-        val url = "${baseUrl}${sourceCurrency}"
+        val url = "${baseUrl}$sourceCurrency"
         return khttp.get(url).jsonObject.getJSONObject("rates").getDouble(targetCurrency).toFloat()
     }
 }

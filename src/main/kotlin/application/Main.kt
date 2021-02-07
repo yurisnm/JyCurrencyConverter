@@ -5,14 +5,14 @@ import application.api.config.modulesAll
 import io.javalin.Javalin
 import org.koin.core.context.startKoin
 
-object Main{
+object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
         startApplication()
     }
 
-    fun startApplication(): Javalin{
+    fun startApplication(): Javalin {
         startKoin {
             modules(modulesAll)
         }

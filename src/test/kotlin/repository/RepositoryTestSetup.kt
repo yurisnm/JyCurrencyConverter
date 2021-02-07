@@ -14,20 +14,20 @@ import resources.schemas.TransactionSchema
  * It has the same HikariConfig as the application.
  */
 open class RepositoryTestSetup {
-    
+
     @BeforeEach
-    fun setup(){
+    fun setup() {
         /**
          * Creates the jdbc from zero for each test.
          */
         Database.connect(this.hikari())
-        transaction{
+        transaction {
             SchemaUtils.create(TransactionSchema)
         }
     }
 
     @AfterEach
-    fun tearDown(){
+    fun tearDown() {
         /**
          * Deletes the DB after each test.
          */
@@ -36,7 +36,7 @@ open class RepositoryTestSetup {
         }
     }
 
-    private fun hikari(): HikariDataSource{
+    private fun hikari(): HikariDataSource {
         /**
          * Configures HikariCP with the same configuration as the Application.
          */
@@ -49,5 +49,4 @@ open class RepositoryTestSetup {
         config.validate()
         return HikariDataSource(config)
     }
-    
 }

@@ -11,18 +11,17 @@ import java.lang.Exception
  * - USES own exception when it's about a INTERNAL_SERVER_ERROR
  */
 object HandlerError {
-    fun handlerErrorException(e: Exception, ctx: Context){
+    fun handlerErrorException(e: Exception, ctx: Context) {
 
-        val ( httpError, httpStatus) = when(e){
+        val (httpError, httpStatus) = when (e) {
 
-            is InvalidTransaction ->{
+            is InvalidTransaction -> {
                 HttpError(e.type, e.message) to HttpStatus.BAD_REQUEST_400
             }
 
             else -> {
                 HttpError("Unknown error", "error not identified") to HttpStatus.INTERNAL_SERVER_ERROR_500
             }
-
         }
 
         ctx.status(httpStatus)

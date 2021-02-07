@@ -13,7 +13,7 @@ import org.joda.time.DateTime
  * @property conversionRate[Float]: Value used to convert sourceValue onto targetValue.
  * @property dateTime[String]: The date and time which the transaction happened.
  */
-data class Transaction (
+data class Transaction(
     val id: Int,
     val userId: String,
     val sourceCurrency: String,

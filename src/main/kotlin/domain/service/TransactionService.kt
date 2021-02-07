@@ -12,7 +12,7 @@ import java.lang.Exception
  */
 class TransactionService(
     private val transactionRepository: Repository<Transaction>
-) : Service<Transaction>{
+) : Service<Transaction> {
 
     private val logger = LoggerFactory.getLogger(TransactionService::class.java)
 
@@ -20,10 +20,10 @@ class TransactionService(
      * Check Service documentations.
      */
     override fun save(entity: Transaction): Transaction = try {
-        transactionRepository.save(entity).also{
+        transactionRepository.save(entity).also {
             logger.info("Transaction successfully saved.")
         }
-    } catch (ex: Exception){
+    } catch (ex: Exception) {
         logger.error("Transaction Error- $ex")
         throw Exception("Transaction Error - Entity not saved")
     }

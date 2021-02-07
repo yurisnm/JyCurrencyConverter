@@ -14,10 +14,9 @@ import resources.repositores.TransactionRepository
  */
 val modulesAll = module {
 
-    single<Repository<Transaction>>(named("transaction")){ TransactionRepository() }
+    single<Repository<Transaction>>(named("transaction")) { TransactionRepository() }
 
     single<Service<Transaction>> { TransactionService(get(named("transaction"))) }
 
     single { TransactionController(get()) }
-
 }

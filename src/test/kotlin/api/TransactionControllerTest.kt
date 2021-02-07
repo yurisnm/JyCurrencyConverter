@@ -29,26 +29,25 @@ class TransactionControllerTest {
 
     private fun genTransactionRequest(transactionRequest: TransactionRequest) = transactionRequest.toModel().copy()
 
-    //TODO: Not able to figure out how to mock rightly registerTransaction. Missing tests for this.
-    //TODO: "TASK-9999" created for this.
+    // TODO: Not able to figure out how to mock rightly registerTransaction. Missing tests for this.
+    // TODO: "TASK-9999" created for this.
 
     @Test
-    fun all_transactions(){
+    fun all_transactions() {
         /**
          * Make sure that we are able to list all transactions.
          */
-        every { transactionServiceMock.findAll()} returns listOf(this.genTransactionRequest(transactionRequest))
+        every { transactionServiceMock.findAll() } returns listOf(this.genTransactionRequest(transactionRequest))
         val transactionRequest = transactionController.listAllTransactions(contextMock)
 
         assertThat(transactionRequest.size).isEqualTo(1)
 
         verify { contextMock.status(HttpStatus.OK_200) }
         verify { transactionServiceMock.findAll() }
-
     }
 
     @Test
-    fun all_transactions_by_id(){
+    fun all_transactions_by_id() {
         /**
          * Make sure that we are able to list all transactions by a certain user using its Id.
          */
@@ -64,18 +63,16 @@ class TransactionControllerTest {
     }
 
     @Test
-    fun error_on_save_transaction(){
+    fun error_on_save_transaction() {
         /**
          * Checks that when registering a new transaction with a invalid body it throws us an error.
          */
-        every { contextMock.bodyAsClass(TransactionRequest::class.java)} throws BadRequestResponse("Couldn't deserialize body")
+        every { contextMock.bodyAsClass(TransactionRequest::class.java) } throws BadRequestResponse("Couldn't deserialize body")
 
-        assertThrows(InvalidTransaction::class.java){
+        assertThrows(InvalidTransaction::class.java) {
             transactionController.registerTransaction(contextMock)
-        }.let{
+        }.let {
             assertThat(it.type).isEqualTo("Invalid Transaction")
         }
-
     }
-
 }

@@ -1,7 +1,7 @@
 package resources.repositores
 
-import domain.repo.Repository
 import domain.entities.Transaction
+import domain.repo.Repository
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
@@ -17,7 +17,7 @@ import resources.schemas.TransactionSchema
  * - List all
  * - List all by id.
  */
-class TransactionRepository: Repository<Transaction> {
+class TransactionRepository : Repository<Transaction> {
     private val logger = LoggerFactory.getLogger(TransactionRepository::class.java)
 
     /**
@@ -25,8 +25,8 @@ class TransactionRepository: Repository<Transaction> {
      *
      *  @property entity[Transaction] transaction that will be inserted in the database.
      */
-    override fun save(entity: Transaction): Transaction = transaction{
-        val result = TransactionSchema.insert{
+    override fun save(entity: Transaction): Transaction = transaction {
+        val result = TransactionSchema.insert {
             it[userId] = entity.userId
             it[sourceCurrency] = entity.sourceCurrency
             it[sourceValue] = entity.sourceValue
@@ -42,7 +42,7 @@ class TransactionRepository: Repository<Transaction> {
      * Get all Transactions from the database
      */
     override fun findAll(): List<Transaction> = transaction {
-        TransactionSchema.selectAll().map{
+        TransactionSchema.selectAll().map {
             it.toTransaction()
         }.toList()
     }
@@ -52,8 +52,8 @@ class TransactionRepository: Repository<Transaction> {
      *
      * @property userId[String] userId used for getting the transactions related to it.
      */
-    override fun findAllByUserId(userId: String): List<Transaction> = transaction{
-        TransactionSchema.select{ TransactionSchema.userId eq userId}.map{
+    override fun findAllByUserId(userId: String): List<Transaction> = transaction {
+        TransactionSchema.select { TransactionSchema.userId eq userId }.map {
             it.toTransaction()
         }.toList()
     }

@@ -16,9 +16,8 @@ class ErrorTest {
 
     private var contextMock = mockk<Context>(relaxed = true)
 
-
     @Test
-    fun invalid_transaction(){
+    fun invalid_transaction() {
         /**
          * A BAD_REQUEST_400 must use our own InvadTransaction
          */
@@ -28,19 +27,19 @@ class ErrorTest {
         )
         HandlerError.handlerErrorException(invalidTransaction, contextMock)
 
-        verify { contextMock.status(HttpStatus.BAD_REQUEST_400)}
-        verify { contextMock.json(HttpError(invalidTransaction.type, invalidTransaction.message))}
+        verify { contextMock.status(HttpStatus.BAD_REQUEST_400) }
+        verify { contextMock.json(HttpError(invalidTransaction.type, invalidTransaction.message)) }
     }
 
     @Test
-    fun server_error(){
+    fun server_error() {
         /**
          * Checks internal server error.
          */
         val serverError = Exception("Unknown error")
         HandlerError.handlerErrorException(serverError, contextMock)
 
-        verify { contextMock.status(HttpStatus.INTERNAL_SERVER_ERROR_500)}
-        verify { contextMock.json(HttpError("Unknown error", "error not identified"))}
+        verify { contextMock.status(HttpStatus.INTERNAL_SERVER_ERROR_500) }
+        verify { contextMock.json(HttpError("Unknown error", "error not identified")) }
     }
 }
