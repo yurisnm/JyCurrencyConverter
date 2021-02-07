@@ -11,12 +11,20 @@ import io.javalin.http.Context
 import org.eclipse.jetty.http.HttpStatus
 import org.slf4j.LoggerFactory
 
+/**
+ * The controller responsible for each possible action on the application.
+ *
+ * @property transactionService [Service] The service responsible for dealing with the BD.
+ */
 class TransactionController(
     private val transactionService: Service<Transaction>
 ) {
 
     private val logger = LoggerFactory.getLogger(TransactionController::class.java)
 
+    /**
+     * Declares all possible access points.
+     */
     fun router(){
         get("/") { ctx ->
             ctx.status(200).result("What's up CURCONV")
@@ -32,6 +40,12 @@ class TransactionController(
         }
     }
 
+    /**
+     * Register a new transaction.
+     *
+     * @param ctx[Context] Context used during pipeline.
+     * @throws InvalidTransaction In case of a bad request a InvalidTransaction can be thrown.
+     */
     fun registerTransaction(ctx: Context): TransactionResponse = try{
         ctx.bodyAsClass(TransactionRequest::class.java).let{
             logger.info("Saving transaction with id ${it.id}")
@@ -46,6 +60,12 @@ class TransactionController(
         )
     }
 
+    /**
+     * Register a new transaction.
+     *
+     * @param ctx[Context] Context used during pipeline.
+     * @return A list with all registered transactions.
+     */
     fun listAllTransactions(ctx: Context): List<TransactionResponse>{
         logger.info("Finding all Transactions")
         return transactionService.findAll().map{TransactionResponse.toResponse(it)}.also {
@@ -53,6 +73,12 @@ class TransactionController(
         }
     }
 
+    /**
+     * Register a new transaction.
+     *
+     * @param ctx[Context] Context used during pipeline.
+     * @return A list with all registered transactions by userId.
+     */
     fun listAllTransactionsByUserId(ctx: Context): List<TransactionResponse>{
         logger.info("Finding all Transactions by UserId")
         val userId = ctx.pathParam("userId")

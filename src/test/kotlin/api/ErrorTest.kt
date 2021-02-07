@@ -9,6 +9,9 @@ import io.mockk.verify
 import org.eclipse.jetty.http.HttpStatus
 import org.junit.jupiter.api.Test
 
+/**
+ * Verify that the errors are as expected.
+ */
 class ErrorTest {
 
     private var contextMock = mockk<Context>(relaxed = true)
@@ -16,6 +19,9 @@ class ErrorTest {
 
     @Test
     fun invalid_transaction(){
+        /**
+         * A BAD_REQUEST_400 must use our own InvadTransaction
+         */
         val invalidTransaction = InvalidTransaction(
             type = "Invalid Transaction",
             message = "Not able to process transaction."
@@ -28,6 +34,9 @@ class ErrorTest {
 
     @Test
     fun server_error(){
+        /**
+         * Checks internal server error.
+         */
         val serverError = Exception("Unknown error")
         HandlerError.handlerErrorException(serverError, contextMock)
 

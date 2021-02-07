@@ -5,6 +5,11 @@ import io.javalin.http.Context
 import org.eclipse.jetty.http.HttpStatus
 import java.lang.Exception
 
+/**
+ * Handle application errors.
+ * - Uses InvalidTransaction when it's about a BAD_REQUEST
+ * - USES own exception when it's about a INTERNAL_SERVER_ERROR
+ */
 object HandlerError {
     fun handlerErrorException(e: Exception, ctx: Context){
 

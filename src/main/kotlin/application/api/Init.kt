@@ -14,11 +14,18 @@ import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 import resources.schemas.TransactionSchema
 
+/**
+ * Koin dependency injection configuration/integration with Javalin server.
+ * Connects "exposed" database to Hikari.
+ */
 object Init: KoinComponent{
 
     private val registerController: TransactionController by inject()
     private const val BAD_REQUEST: Int = 404
 
+    /**
+     * Starts application on available port.
+     */
     fun start(): Javalin {
         Database.connect(hikari())
         transaction {
@@ -46,6 +53,11 @@ object Init: KoinComponent{
         return app
     }
 
+    /**
+     * Hikari configuration used for DB managing.
+     *
+     * @return [HikariDataSource] used for managing database.
+     */
     private fun hikari(): HikariDataSource{
         val config = HikariConfig()
         config.driverClassName = "org.h2.Driver"

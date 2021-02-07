@@ -9,11 +9,17 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import resources.schemas.TransactionSchema
 
-
+/**
+ * Configure a temp repository connected to Hikari to be used as test.
+ * It has the same HikariConfig as the application.
+ */
 open class RepositoryTestSetup {
     
     @BeforeEach
     fun setup(){
+        /**
+         * Creates the jdbc from zero for each test.
+         */
         Database.connect(this.hikari())
         transaction{
             SchemaUtils.create(TransactionSchema)
@@ -22,12 +28,18 @@ open class RepositoryTestSetup {
 
     @AfterEach
     fun tearDown(){
+        /**
+         * Deletes the DB after each test.
+         */
         transaction {
             SchemaUtils.drop(TransactionSchema)
         }
     }
 
     private fun hikari(): HikariDataSource{
+        /**
+         * Configures HikariCP with the same configuration as the Application.
+         */
         val config = HikariConfig()
         config.driverClassName = "org.h2.Driver"
         config.jdbcUrl = "jdbc:h2:mem:test"

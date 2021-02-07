@@ -1,6 +1,9 @@
 package resources.schemas
 import org.jetbrains.exposed.sql.Table
 
+/**
+ * Table that represents the structure of a transaction.
+ */
 object TransactionSchema: Table() {
     val id = integer("id").autoIncrement().primaryKey()
     val userId = varchar("userId",60)

@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import repository.TransactionRequestBuilder
 
+/**
+ * Checks all operations made by TransactionController.
+ */
 class TransactionControllerTest {
 
     private var contextMock = mockk<Context>(relaxed = true)
@@ -26,9 +29,14 @@ class TransactionControllerTest {
 
     private fun genTransactionRequest(transactionRequest: TransactionRequest) = transactionRequest.toModel().copy()
 
+    //TODO: Not able to figure out how to mock rightly registerTransaction. Missing tests for this.
+    //TODO: "TASK-9999" created for this.
 
     @Test
     fun all_transactions(){
+        /**
+         * Make sure that we are able to list all transactions.
+         */
         every { transactionServiceMock.findAll()} returns listOf(this.genTransactionRequest(transactionRequest))
         val transactionRequest = transactionController.listAllTransactions(contextMock)
 
@@ -41,6 +49,9 @@ class TransactionControllerTest {
 
     @Test
     fun all_transactions_by_id(){
+        /**
+         * Make sure that we are able to list all transactions by a certain user using its Id.
+         */
         val userId = "user0001"
         every { transactionServiceMock.findAllByUserId(any()) } returns listOf(this.genTransactionRequest(transactionRequest))
         every { contextMock.pathParam(any()) } returns userId
@@ -54,6 +65,9 @@ class TransactionControllerTest {
 
     @Test
     fun error_on_save_transaction(){
+        /**
+         * Checks that when registering a new transaction with a invalid body it throws us an error.
+         */
         every { contextMock.bodyAsClass(TransactionRequest::class.java)} throws BadRequestResponse("Couldn't deserialize body")
 
         assertThrows(InvalidTransaction::class.java){

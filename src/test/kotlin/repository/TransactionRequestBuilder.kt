@@ -2,6 +2,9 @@ package repository
 
 import application.api.entities.TransactionRequest
 
+/**
+ * A builder able to create a simple object that simulates a TransactionRequest.
+ */
 class TransactionRequestBuilder {
 
     private val id: Int = 1
