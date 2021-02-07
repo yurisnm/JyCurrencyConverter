@@ -9,12 +9,14 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import resources.repositores.TransactionRepository
 
+/**
+ * All modules and dependency injections that are used by the application.
+ */
 val modulesAll = module {
 
-    single<Repository<Transaction>>(named("transaction")){ TransactionRepository() }
+    single<Repository<Transaction>>(named("transaction")) { TransactionRepository() }
 
     single<Service<Transaction>> { TransactionService(get(named("transaction"))) }
 
     single { TransactionController(get()) }
-
 }

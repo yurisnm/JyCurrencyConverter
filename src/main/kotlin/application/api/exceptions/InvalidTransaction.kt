@@ -1,6 +1,9 @@
 package application.api.exceptions
 
-class InvalidTransaction (
+/**
+ * Exception used for BAD_REQUEST.
+ */
+class InvalidTransaction(
     val type: String,
     override val message: String,
-): Exception(message)
+) : Exception(message)

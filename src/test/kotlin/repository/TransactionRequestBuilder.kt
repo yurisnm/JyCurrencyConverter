@@ -2,6 +2,9 @@ package repository
 
 import application.api.entities.TransactionRequest
 
+/**
+ * A builder able to create a simple object that simulates a TransactionRequest.
+ */
 class TransactionRequestBuilder {
 
     private val id: Int = 1
@@ -10,8 +13,7 @@ class TransactionRequestBuilder {
     private val sourceValue: Float = 1.00F
     private val targetCurrency: String = "BRL"
 
-
-    companion object{
+    companion object {
         fun build(transaction: TransactionRequestBuilder = TransactionRequestBuilder()): TransactionRequest =
             TransactionRequest(
                 id = transaction.id,
